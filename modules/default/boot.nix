@@ -70,8 +70,8 @@ in
 
     hardware.graphics = {
       enable = true;
-      package = pkgs.mesa;
-      package32 = pkgs.pkgsi686Linux.mesa;
+      package = unstable-pkgs.mesa;
+      package32 = unstable-pkgs.pkgsi686Linux.mesa;
     };
   };
 }
