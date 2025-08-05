@@ -32,7 +32,7 @@ in
       linuxKernel.packages.linux_6_12.hid-tmff2
       mangohud         # Vulkan and OpenGL overlay for monitoring FPS, temperatures, CPU/GPU load and more
       #mesa             # Ensure last mesa stable on GLF OS
-      oversteer        # Steering Wheel Manager for Linux
+      #oversteer        # Steering Wheel Manager for Linux
       umu-launcher     # Unified launcher for Windows games on Linux using the Steam Linux Runtime and Tools
       wineWowPackages.staging # Open Source implementation of the Windows API on top of X, OpenGL, and Unix (with staging patches)
       winetricks       # Script to install DLLs needed to work around problems in Wine
@@ -62,12 +62,12 @@ in
     services.udev.packages = [ pkgs-unstable.oversteer ];
     
   # Hardware support
-    hardware.fanatec.enable = true;
-    hardware.new-lg4ff_vff.enable = true;
+    #hardware.fanatec.enable = true;
+    #hardware.new-lg4ff_vff.enable = true;
     hardware.steam-hardware.enable = true;
-    hardware.xone.enable = true;
-    hardware.xpadneo.enable = true;
-    hardware.opentabletdriver.enable = true;
+    #hardware.xone.enable = true;
+    #hardware.xpadneo.enable = true;
+    #hardware.opentabletdriver.enable = true;
     
     programs.gamemode.enable = true;
 
