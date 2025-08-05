@@ -8,30 +8,55 @@
 
 {
     config = lib.mkIf(config.glf.environment.enable && (config.glf.environment.edition == "studio" || config.glf.environment.edition == "studio-pro")) {
-boot.extraModulePackages = [
-    (pkgs.linuxKernel.packages.linux_6_12.v4l2loopback.overrideAttrs
-      ({
-        version = "0.13.2-manual";
-        src = (pkgs.fetchFromGitHub {
-          owner = "umlaeute";
-          repo = "v4l2loopback";
-          rev = "v0.13.2";
-          hash = "sha256-rcwgOXnhRPTmNKUppupfe/2qNUBDUqVb3TeDbrP5pnU=";
-        });
-      })
-    )
+#boot.extraModulePackages = [
+#    (pkgs.linuxKernel.packages.linux_6_12.v4l2loopback.overrideAttrs
+#      ({
+#        version = "0.13.2-manual";
+#        src = (pkgs.fetchFromGitHub {
+#          owner = "umlaeute";
+#          repo = "v4l2loopback";
+#          rev = "v0.13.2";
+#          hash = "sha256-rcwgOXnhRPTmNKUppupfe/2qNUBDUqVb3TeDbrP5pnU=";
+#        });
+#      })
+#    )
+#  ];
+
+  programs.obs-studio = {
+    enable = true;
+    plugins = with pkgs.obs-studio-plugins; [
+      obs-v4l2sink
+      obs-gstreamer
+      obs-vkcapture
+      obs-webkit
+    ];
+    nvenc = true;
+  };
+
+  fonts.packages = with pkgs; [
+    noto-fonts
+    noto-fonts-cjk
+    noto-fonts-emoji
+    liberation_ttf
+    fira-code
+    fira-code-symbols
+    mplus-outline-fonts
+    dina-font
+    proggytiny
+    roboto
+    lato
+    montserrat
+    raleway
+    oswald
+    playfair-display
+    merriweather
+    poppins
+    source-sans-pro
+    league-spartan
+    abril-fatface
+    bebas-neue
   ];
 
-systemd.services.flatpak-repo = {
-      wantedBy = [ "multi-user.target" ];
-      requires = [ "network-online.target" ];
-      after = [ "network-online.target" ];
-      wants = [ "network-online.target" ];
-      path = [ pkgs.flatpak ];
-      script = ''
-        	flatpak install -y com.obsproject.Studio org.blender.Blender org.kde.kdenlive 
-      '';
-    };
 systemd.tmpfiles.rules = 
   let
     rocmEnv = pkgs.symlinkJoin {
