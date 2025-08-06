@@ -50,7 +50,6 @@
       poppins
       source-sans-pro
       league-spartan
-      bebas-neue
     ];
 
     systemd.tmpfiles.rules = 
