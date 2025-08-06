@@ -41,7 +41,6 @@
       fira-code-symbols
       mplus-outline-fonts
       dina-font
-      proggytiny
       roboto
       lato
       montserrat
