@@ -30,7 +30,6 @@
         obs-vkcapture
         obs-webkit
       ];
-      nvenc = true;
     };
 
     fonts.packages = with pkgs; [
@@ -55,7 +54,7 @@
       league-spartan
       abril-fatface
       bebas-neue
-    ]; # <- Semicolon added
+    ];
 
     systemd.tmpfiles.rules = 
       let
@@ -76,12 +75,12 @@
       extraPackages = with pkgs; [
         mesa.opencl # Assure que l'implémentation OpenCL de Mesa (Rusticl) est installée
       ];
-    }; # <- Semicolon added
+    };
 
     environment.variables = {
       ROC_ENABLE_PRE_VEGA = "1";
       RUSTICL_ENABLE = "radeonsi"; 
-    }; 
+    };
     
     environment.systemPackages =
       if config.glf.environment.edition == "studio-pro" then
