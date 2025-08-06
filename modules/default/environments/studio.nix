@@ -46,7 +46,6 @@
       montserrat
       raleway
       oswald
-      playfair-display
       merriweather
       poppins
       source-sans-pro
