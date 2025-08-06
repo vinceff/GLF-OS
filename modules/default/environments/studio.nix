@@ -7,81 +7,81 @@
 }:
 
 {
-    config = lib.mkIf(config.glf.environment.enable && (config.glf.environment.edition == "studio" || config.glf.environment.edition == "studio-pro")) {
-#boot.extraModulePackages = [
-#    (pkgs.linuxKernel.packages.linux_6_12.v4l2loopback.overrideAttrs
-#      ({
-#        version = "0.13.2-manual";
-#        src = (pkgs.fetchFromGitHub {
-#          owner = "umlaeute";
-#          repo = "v4l2loopback";
-#          rev = "v0.13.2";
-#          hash = "sha256-rcwgOXnhRPTmNKUppupfe/2qNUBDUqVb3TeDbrP5pnU=";
-#        });
-#      })
-#    )
-#  ];
+  config = lib.mkIf(config.glf.environment.enable && (config.glf.environment.edition == "studio" || config.glf.environment.edition == "studio-pro")) {
+    #boot.extraModulePackages = [
+    #  (pkgs.linuxKernel.packages.linux_6_12.v4l2loopback.overrideAttrs
+    #    ({
+    #      version = "0.13.2-manual";
+    #      src = (pkgs.fetchFromGitHub {
+    #        owner = "umlaeute";
+    #        repo = "v4l2loopback";
+    #        rev = "v0.13.2";
+    #        hash = "sha256-rcwgOXnhRPTmNKUppupfe/2qNUBDUqVb3TeDbrP5pnU=";
+    #      });
+    #    })
+    #  )
+    #];
 
-  programs.obs-studio = {
-    enable = true;
-    plugins = with pkgs.obs-studio-plugins; [
-      obs-v4l2sink
-      obs-gstreamer
-      obs-vkcapture
-      obs-webkit
-    ];
-    nvenc = true;
-  };
-
-  fonts.packages = with pkgs; [
-    noto-fonts
-    noto-fonts-cjk
-    noto-fonts-emoji
-    liberation_ttf
-    fira-code
-    fira-code-symbols
-    mplus-outline-fonts
-    dina-font
-    proggytiny
-    roboto
-    lato
-    montserrat
-    raleway
-    oswald
-    playfair-display
-    merriweather
-    poppins
-    source-sans-pro
-    league-spartan
-    abril-fatface
-    bebas-neue
-  ];
-
-systemd.tmpfiles.rules = 
-  let
-    rocmEnv = pkgs.symlinkJoin {
-      name = "rocm-combined";
-      paths = with pkgs.rocmPackages; [
-        rocblas
-        hipblas
-        clr
+    programs.obs-studio = {
+      enable = true;
+      plugins = with pkgs.obs-studio-plugins; [
+        obs-v4l2sink
+        obs-gstreamer
+        obs-vkcapture
+        obs-webkit
       ];
+      nvenc = true;
     };
-  in [
-    "L+    /opt/rocm/hip  -    -    -     -    ${rocmEnv}"
-  ];  
 
-        hardware.graphics = {
-            enable = true; 
-            extraPackages = with pkgs; [
-            mesa.opencl # Assure que l'implémentation OpenCL de Mesa (Rusticl) est installée
-            ];
-          };
+    fonts.packages = with pkgs; [
+      noto-fonts
+      noto-fonts-cjk
+      noto-fonts-emoji
+      liberation_ttf
+      fira-code
+      fira-code-symbols
+      mplus-outline-fonts
+      dina-font
+      proggytiny
+      roboto
+      lato
+      montserrat
+      raleway
+      oswald
+      playfair-display
+      merriweather
+      poppins
+      source-sans-pro
+      league-spartan
+      abril-fatface
+      bebas-neue
+    ]; # <- Semicolon added
 
-        environment.variables = {
-          ROC_ENABLE_PRE_VEGA = "1";
-          RUSTICL_ENABLE = "radeonsi"; 
+    systemd.tmpfiles.rules = 
+      let
+        rocmEnv = pkgs.symlinkJoin {
+          name = "rocm-combined";
+          paths = with pkgs.rocmPackages; [
+            rocblas
+            hipblas
+            clr
+          ];
         };
+      in [
+        "L+    /opt/rocm/hip  -    -    -     -    ${rocmEnv}"
+      ];  
+
+    hardware.graphics = {
+      enable = true; 
+      extraPackages = with pkgs; [
+        mesa.opencl # Assure que l'implémentation OpenCL de Mesa (Rusticl) est installée
+      ];
+    }; # <- Semicolon added
+
+    environment.variables = {
+      ROC_ENABLE_PRE_VEGA = "1";
+      RUSTICL_ENABLE = "radeonsi"; 
+    }; 
     
     environment.systemPackages =
       if config.glf.environment.edition == "studio-pro" then
@@ -90,13 +90,13 @@ systemd.tmpfiles.rules =
           gimp3-with-plugins
           audacity
           freetube
-          ]
+        ]
       else
         with pkgs; [
           davinci-resolve
           gimp3-with-plugins
           audacity
           freetube  
-          ];
+        ];
   };
 }
