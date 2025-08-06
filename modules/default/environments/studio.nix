@@ -39,7 +39,6 @@
       liberation_ttf
       fira-code
       fira-code-symbols
-      mplus-outline-fonts
       dina-font
       roboto
       lato
