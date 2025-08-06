@@ -22,15 +22,6 @@
     #  )
     #];
 
-    programs.obs-studio = {
-      enable = true;
-      plugins = with pkgs.obs-studio-plugins; [
-        obs-v4l2sink
-        obs-gstreamer
-        obs-vkcapture
-        obs-webkit
-      ];
-    };
 
     fonts.packages = with pkgs; [
       noto-fonts
