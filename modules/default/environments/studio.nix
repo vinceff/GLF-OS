@@ -50,7 +50,6 @@
       poppins
       source-sans-pro
       league-spartan
-      abril-fatface
       bebas-neue
     ];
 
